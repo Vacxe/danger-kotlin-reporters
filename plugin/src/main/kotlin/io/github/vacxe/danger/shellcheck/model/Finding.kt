@@ -9,5 +9,5 @@ data class Finding(
     val level: Level,
     val code: Int,
     val message: String,
-    val fix: List<Replacement>?
+    val fix: Fix?
 )
