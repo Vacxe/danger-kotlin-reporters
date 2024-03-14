@@ -7,10 +7,9 @@ import java.io.File
 
 class DefaultFindingsDangerReporter(
     private val context: DangerContext,
-    private val isInlineEnabled: Boolean = true,
+    private val inline: Boolean,
+    private val findingsAsFails: Boolean,
 ) : FindingsDangerReporter {
-
-    private val pathPrefix = File("").absolutePath
 
     override fun report(
         finding: Finding,
@@ -21,7 +20,7 @@ class DefaultFindingsDangerReporter(
         val filePath = file.let(::createFilePath)
         val line = finding.line
 
-        if (!isInlineEnabled || filePath == null) {
+        if (!inline) {
             report(message, severity)
             return
         }
@@ -32,10 +31,14 @@ class DefaultFindingsDangerReporter(
         message: String,
         severity: Level,
     ) {
-        when (severity) {
-            Level.INFO, Level.STYLE -> context.message(message)
-            Level.WARNING -> context.warn(message)
-            Level.ERROR -> context.fail(message)
+        if (findingsAsFails) {
+            context.fail(message)
+        } else {
+            when (severity) {
+                Level.INFO, Level.STYLE -> context.message(message)
+                Level.WARNING -> context.warn(message)
+                Level.ERROR -> context.fail(message)
+            }
         }
     }
 
@@ -45,21 +48,22 @@ class DefaultFindingsDangerReporter(
         filePath: String,
         line: Int,
     ) {
-        when (severity) {
-            Level.INFO, Level.STYLE -> context.message(message, filePath, line)
-            Level.WARNING -> context.warn(message, filePath, line)
-            Level.ERROR -> context.fail(message, filePath, line)
+        if (findingsAsFails) {
+            context.fail(message)
+        } else {
+            when (severity) {
+                Level.INFO, Level.STYLE -> context.message(message, filePath, line)
+                Level.WARNING -> context.warn(message, filePath, line)
+                Level.ERROR -> context.fail(message, filePath, line)
+            }
         }
     }
 
-    private fun createFilePath(file: File): String? {
-        if (file.absolutePath == pathPrefix) return null
-        return file.absolutePath.removePrefix(pathPrefix + File.separator)
-    }
+    private fun createFilePath(file: File) = file.absolutePath.removePrefix(".${File.separator}")
 
     private fun createMessage(finding: Finding): String {
         val message = finding.message.let { "**Shellcheck**: $it" }
-        val rule = finding.code.let { "**Code**: [$it](https://www.shellcheck.net/wiki/$it)" }
+        val rule = finding.code.let { "**Code**: [$it](https://www.shellcheck.net/wiki/SC$it)" }
         return listOfNotNull(
             "", // start message with blank line
             message,

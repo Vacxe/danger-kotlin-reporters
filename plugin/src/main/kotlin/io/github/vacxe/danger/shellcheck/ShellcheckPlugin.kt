@@ -5,7 +5,6 @@ package io.github.vacxe.danger.shellcheck
 import io.github.vacxe.danger.shellcheck.model.Finding
 import io.github.vacxe.danger.shellcheck.parser.ShellcheckReportParser
 import io.github.vacxe.danger.shellcheck.reporter.DefaultFindingsDangerReporter
-import io.github.vacxe.danger.shellcheck.reporter.FindingsDangerReporter
 import systems.danger.kotlin.sdk.DangerPlugin
 import java.io.File
 
@@ -31,12 +30,15 @@ object ShellcheckPlugin : DangerPlugin() {
 
     fun parseAndReport(
         vararg files: File,
-        reporter: FindingsDangerReporter = DefaultFindingsDangerReporter(
-            context,
-        ),
+        inline: Boolean = true,
+        findingsAsFails: Boolean = false,
     ) {
         val report = parse(*files)
-        report(report, reporter)
+        report(
+            report,
+            inline,
+            findingsAsFails,
+        )
     }
 
     fun parse(
@@ -45,10 +47,14 @@ object ShellcheckPlugin : DangerPlugin() {
 
     fun report(
         report: List<Finding>,
-        reporter: FindingsDangerReporter = DefaultFindingsDangerReporter(
-            context,
-        ),
+        inline: Boolean = true,
+        findingsAsFails: Boolean = false,
     ) {
+        val reporter = DefaultFindingsDangerReporter(
+            context = context,
+            inline = inline,
+            findingsAsFails = findingsAsFails,
+        )
         report.forEach(reporter::report)
     }
 }

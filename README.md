@@ -31,7 +31,13 @@ If you have custom Maven proxy like Artifactory don't forget to add it
 This does what it says. If you have one Shellcheck report and don't want any customization - that's probably your choice.
 
 ```kotlin
-ShellcheckPlugin.parseAndReport(reportFile)
+
+```
+
+By default, Plugin inline comments for you pull request and apply severity level based on Shellcheck report, however you can change this behaviour
+
+```kotlin
+ShellcheckPlugin.parseAndReport(reportFile, inline = false, findingsAsFails = true)
 ```
 
 #### Multiple files parse and report
