@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "io.github.vacxe.danger.shellcheck"
-version = "1.0.1"
+version = "1.0.2"
 
 dependencies {
     implementation("systems.danger:danger-kotlin-sdk:1.2")

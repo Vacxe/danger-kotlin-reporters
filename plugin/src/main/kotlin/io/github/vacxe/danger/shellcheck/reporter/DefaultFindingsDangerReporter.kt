@@ -33,7 +33,7 @@ class DefaultFindingsDangerReporter(
         severity: Level,
     ) {
         when (severity) {
-            Level.INFO -> context.message(message)
+            Level.INFO, Level.STYLE -> context.message(message)
             Level.WARNING -> context.warn(message)
             Level.ERROR -> context.fail(message)
         }
@@ -46,7 +46,7 @@ class DefaultFindingsDangerReporter(
         line: Int,
     ) {
         when (severity) {
-            Level.INFO -> context.message(message, filePath, line)
+            Level.INFO, Level.STYLE -> context.message(message, filePath, line)
             Level.WARNING -> context.warn(message, filePath, line)
             Level.ERROR -> context.fail(message, filePath, line)
         }
