@@ -11,16 +11,21 @@ class DefaultFindingsDangerReporter(
     private val findingsAsFails: Boolean,
 ) : FindingsDangerReporter {
 
+    private val pathPrefix = File("").absolutePath
+
     override fun report(
         finding: Finding,
     ) {
         val message = createMessage(finding)
         val severity = finding.level
-        val file = finding.file.let(::File)
+        val file = finding
+            .file
+            .removePrefix(".${File.separator}")
+            .let(::File)
         val filePath = file.let(::createFilePath)
         val line = finding.line
 
-        if (!inline) {
+        if (!inline || filePath == null) {
             report(message, severity)
             return
         }
@@ -59,7 +64,10 @@ class DefaultFindingsDangerReporter(
         }
     }
 
-    private fun createFilePath(file: File) = file.absolutePath.removePrefix(".${File.separator}")
+    private fun createFilePath(file: File): String? {
+        if (file.absolutePath == pathPrefix) return null
+        return file.absolutePath.removePrefix(pathPrefix + File.separator)
+    }
 
     private fun createMessage(finding: Finding): String {
         val message = finding.message.let { "**Shellcheck**: $it" }
@@ -71,3 +79,4 @@ class DefaultFindingsDangerReporter(
         ).joinToString(separator = "\n")
     }
 }
+
