@@ -50,8 +50,8 @@ publishing {
         repositories {
             maven {
                 credentials {
-                    username = System.getenv("OSSRH_USERNAME")
-                    password = System.getenv("OSSRH_PASSWORD")
+                    username = System.getenv("SONATYPE_USERNAME")
+                    password = System.getenv("SONATYPE_PASSWORD")
                 }
                 name = "sonatype"
                 setUrl("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
@@ -60,10 +60,15 @@ publishing {
     }
 }
 
-signing {
-    val signingKeyId: String? by project
-    val signingKey: String? by project
-    val signingPassword: String? by project
-    useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
-    sign(publishing.publications)
+val passphrase: String? = System.getenv("GPG_PASSPHRASE")
+val keyId: String? = System.getenv("GPG_KEY_ID")
+
+if (!passphrase.isNullOrBlank() && !keyId.isNullOrBlank()) {
+    project.configure<SigningExtension> {
+        sign(publishing.publications)
+    }
+
+    project.extra.set("signing.keyId", keyId)
+    project.extra.set("signing.password", passphrase)
+    project.extra.set("signing.secretKeyRingFile", "${project.rootProject.rootDir}/buildsystem/secring.gpg")
 }
