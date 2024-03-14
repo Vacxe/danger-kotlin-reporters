@@ -17,6 +17,13 @@ Latest version could be found in [Maven Central](https://search.maven.org/artifa
 register.plugin(ShellcheckPlugin)
 ```
 
+If you have custom Maven proxy like Artifactory don't forget to add it
+
+```
+@file:Repository("https://URL")
+@file:DependsOn("io.github.vacxe.danger.shellcheck:plugin:<LATEST VERSION>", options = ["username=<ARTIFACTORY_USERNAME>", "password=<ARTIFACTORY_PASSWORD>"])
+```
+
 ### Basic
 
 #### Single file parse and report
