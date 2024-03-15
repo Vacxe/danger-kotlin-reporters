@@ -54,7 +54,7 @@ class DefaultFindingsDangerReporter(
         line: Int,
     ) {
         if (findingsAsFails) {
-            context.fail(message)
+            context.fail(message, filePath, line)
         } else {
             when (severity) {
                 Level.INFO, Level.STYLE -> context.message(message, filePath, line)
