@@ -1,0 +1,67 @@
+[
+    {
+        "file": "sample/bad.sh",
+        "line": 1,
+        "endLine": 1,
+        "column": 1,
+        "endColumn": 1,
+        "level": "error",
+        "code": 2148,
+        "message": "Tips depend on target shell and yours is unknown. Add a shebang or a 'shell' directive.",
+        "fix": null
+    },
+    {
+        "file": "sample/bad.sh",
+        "line": 1,
+        "endLine": 1,
+        "column": 6,
+        "endColumn": 8,
+        "level": "info",
+        "code": 2086,
+        "message": "Double quote to prevent globbing and word splitting.",
+        "fix": {
+            "replacements": [
+                {
+                    "column": 6,
+                    "endColumn": 6,
+                    "endLine": 1,
+                    "insertionPoint": "afterEnd",
+                    "line": 1,
+                    "precedence": 7,
+                    "replacement": "\""
+                },
+                {
+                    "column": 8,
+                    "endColumn": 8,
+                    "endLine": 1,
+                    "insertionPoint": "beforeStart",
+                    "line": 1,
+                    "precedence": 7,
+                    "replacement": "\""
+                }
+            ]
+        }
+    },
+    {
+        "file": "sample/bad.sh",
+        "line": 2,
+        "endLine": 2,
+        "column": 14,
+        "endColumn": 19,
+        "level": "warning",
+        "code": 2061,
+        "message": "Quote the parameter to -name so the shell won't interpret it.",
+        "fix": null
+    },
+    {
+        "file": "sample/bad.sh",
+        "line": 2,
+        "endLine": 2,
+        "column": 14,
+        "endColumn": 15,
+        "level": "info",
+        "code": 2035,
+        "message": "Use ./*glob* or -- *glob* so names with dashes won't become options.",
+        "fix": null
+    }
+]
