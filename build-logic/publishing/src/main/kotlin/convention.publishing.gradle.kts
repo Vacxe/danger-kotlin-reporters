@@ -1,4 +1,5 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import java.net.URI
 
 plugins {
     id("java")
@@ -14,6 +15,18 @@ java {
 
 tasks.withType<ShadowJar>().configureEach {
     archiveClassifier.set("")
+}
+
+val releaseMode: String? by project
+val versionSuffix = when (releaseMode) {
+    "RELEASE" -> ""
+    else -> "-SNAPSHOT"
+}
+
+version = readVersion() + versionSuffix
+
+fun readVersion(): String {
+    return project.layout.projectDirectory.file("version").asFile.readText().trim()
 }
 
 publishing {
@@ -54,7 +67,14 @@ publishing {
                     password = System.getenv("SONATYPE_PASSWORD")
                 }
                 name = "sonatype"
-                setUrl("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+
+                setUrl(when (releaseMode) {
+                    "RELEASE" -> System.getenv("SONATYPE_RELEASES_URL")
+                        ?: "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+
+                    else -> System.getenv("SONATYPE_SNAPSHOTS_URL")
+                        ?: "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+                })
             }
         }
     }
