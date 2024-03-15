@@ -31,13 +31,11 @@ object ShellcheckPlugin : DangerPlugin() {
     fun parseAndReport(
         vararg files: File,
         inline: Boolean = true,
-        findingsAsFails: Boolean = false,
     ) {
         val report = parse(*files)
         report(
             report,
             inline,
-            findingsAsFails,
         )
     }
 
@@ -48,12 +46,10 @@ object ShellcheckPlugin : DangerPlugin() {
     fun report(
         report: List<Finding>,
         inline: Boolean = true,
-        findingsAsFails: Boolean = false,
     ) {
         val reporter = DefaultFindingsDangerReporter(
             context = context,
             inline = inline,
-            findingsAsFails = findingsAsFails,
         )
         report.forEach(reporter::report)
     }

@@ -3,47 +3,35 @@ package io.github.vacxe.danger.shellcheck.reporter
 import io.github.vacxe.danger.shellcheck.model.Finding
 import io.github.vacxe.danger.shellcheck.model.Level
 import systems.danger.kotlin.sdk.DangerContext
-import java.io.File
 
 class DefaultFindingsDangerReporter(
     private val context: DangerContext,
     private val inline: Boolean,
-    private val findingsAsFails: Boolean,
 ) : FindingsDangerReporter {
-
-    private val pathPrefix = File("").absolutePath
 
     override fun report(
         finding: Finding,
     ) {
         val message = createMessage(finding)
         val severity = finding.level
-        val file = finding
-            .file
-            .removePrefix(".${File.separator}")
-            .let(::File)
-        val filePath = file.let(::createFilePath)
+        val file = finding.file
         val line = finding.line
 
-        if (!inline || filePath == null) {
+        if (inline) {
+            report(message, severity, file, line)
+        } else {
             report(message, severity)
-            return
         }
-        report(message, severity, filePath, line)
     }
 
     private fun report(
         message: String,
         severity: Level,
     ) {
-        if (findingsAsFails) {
-            context.fail(message)
-        } else {
-            when (severity) {
-                Level.INFO, Level.STYLE -> context.message(message)
-                Level.WARNING -> context.warn(message)
-                Level.ERROR -> context.fail(message)
-            }
+        when (severity) {
+            Level.INFO, Level.STYLE -> context.message(message)
+            Level.WARNING -> context.warn(message)
+            Level.ERROR -> context.fail(message)
         }
     }
 
@@ -53,20 +41,11 @@ class DefaultFindingsDangerReporter(
         filePath: String,
         line: Int,
     ) {
-        if (findingsAsFails) {
-            context.fail(message, filePath, line)
-        } else {
-            when (severity) {
-                Level.INFO, Level.STYLE -> context.message(message, filePath, line)
-                Level.WARNING -> context.warn(message, filePath, line)
-                Level.ERROR -> context.fail(message, filePath, line)
-            }
+        when (severity) {
+            Level.INFO, Level.STYLE -> context.message(message, filePath, line)
+            Level.WARNING -> context.warn(message, filePath, line)
+            Level.ERROR -> context.fail(message, filePath, line)
         }
-    }
-
-    private fun createFilePath(file: File): String? {
-        if (file.absolutePath == pathPrefix) return null
-        return file.absolutePath.removePrefix(pathPrefix + File.separator)
     }
 
     private fun createMessage(finding: Finding): String {
@@ -79,4 +58,3 @@ class DefaultFindingsDangerReporter(
         ).joinToString(separator = "\n")
     }
 }
-

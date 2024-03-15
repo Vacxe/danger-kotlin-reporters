@@ -34,10 +34,10 @@ This does what it says. If you have one Shellcheck report and don't want any cus
 
 ```
 
-By default, Plugin inline comments for you pull request and apply severity level based on Shellcheck report, however you can change this behaviour
+By default, Plugin inline comments for you pull request and apply severity level based on Shellcheck report
 
 ```kotlin
-ShellcheckPlugin.parseAndReport(reportFile, inline = false, findingsAsFails = true)
+ShellcheckPlugin.parseAndReport(reportFile, inline = false)
 ```
 
 #### Multiple files parse and report
