@@ -4,7 +4,7 @@
 
 import systems.danger.kotlin.*
 import systems.danger.kotlin.models.github.*
-import io.github.vacxe.danger.shellcheck.ShellcheckPlugin
+import io.github.vacxe.danger.kotlin.shellcheck.ShellcheckPlugin
 import java.io.File
 
 register.plugin(ShellcheckPlugin)
