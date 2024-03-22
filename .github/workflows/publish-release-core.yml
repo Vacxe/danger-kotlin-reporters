@@ -1,4 +1,4 @@
-name: Yamllint Publish Release
+name: Core Publish Release
 
 on:
   push:
