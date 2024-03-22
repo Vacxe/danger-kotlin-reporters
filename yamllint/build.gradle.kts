@@ -8,6 +8,7 @@ group = "io.github.vacxe.danger.kotlin"
 
 
 dependencies {
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation("systems.danger:danger-kotlin-sdk:1.2")
 
     implementation(project(":core"))
