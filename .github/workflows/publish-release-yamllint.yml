@@ -3,7 +3,7 @@ name: Shellcheck Publish Release
 on:
   push:
     tags:
-      - 'yamllint*'
+      - 'yamllint_*'
 
 jobs:
   publish-release:
