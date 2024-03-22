@@ -1,3 +1,4 @@
+@file:Repository("https://s01.oss.sonatype.org/content/repositories/snapshots")
 @file:DependsOn("io.github.vacxe.danger.kotlin:shellcheck:1.0.0-SNAPSHOT")
 
 import systems.danger.kotlin.*
