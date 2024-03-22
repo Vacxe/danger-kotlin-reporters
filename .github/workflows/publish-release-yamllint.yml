@@ -1,4 +1,4 @@
-name: Shellcheck Publish Release
+name: Yamllint Publish Release
 
 on:
   push:
