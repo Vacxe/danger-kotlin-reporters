@@ -1,14 +1,13 @@
 package io.github.vacxe.danger.kotlin.core
 
 import io.github.vacxe.danger.kotlin.core.model.Finding
-import io.github.vacxe.danger.kotlin.core.reporter.DefaultFindingsDangerReporter
-import systems.danger.kotlin.sdk.DangerPlugin
+import io.github.vacxe.danger.kotlin.core.reporter.FindingsDangerReporter
 import java.io.File
 
-abstract class DangerReporter : DangerPlugin() {
-    abstract fun parse(vararg files: File): List<Finding>
+interface DangerReporter {
+    fun parse(vararg files: File): List<Finding>
 
-    open val findingsDangerReporter = DefaultFindingsDangerReporter(context)
+    val findingsDangerReporter: FindingsDangerReporter
 
     fun parseAndReport(
         vararg files: File,

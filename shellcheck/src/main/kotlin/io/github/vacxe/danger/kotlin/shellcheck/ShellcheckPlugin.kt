@@ -3,7 +3,10 @@
 package io.github.vacxe.danger.kotlin.shellcheck
 
 import io.github.vacxe.danger.kotlin.core.DangerReporter
+import io.github.vacxe.danger.kotlin.core.reporter.DefaultFindingsDangerReporter
+import io.github.vacxe.danger.kotlin.core.reporter.FindingsDangerReporter
 import io.github.vacxe.danger.kotlin.shellcheck.parser.ShellcheckReportParser
+import systems.danger.kotlin.sdk.DangerPlugin
 import java.io.File
 
 /**
@@ -20,7 +23,7 @@ import java.io.File
  * ShellcheckPlugin.parseAndReport(files)
  * ```
  */
-object ShellcheckPlugin : DangerReporter() {
+object ShellcheckPlugin : DangerPlugin(), DangerReporter {
 
     override val id: String = "shellcheck-plugin"
 
@@ -29,4 +32,7 @@ object ShellcheckPlugin : DangerReporter() {
     override fun parse(
         vararg files: File,
     ) = parser.parse(files.asList())
+
+    override val findingsDangerReporter: FindingsDangerReporter
+        get() = DefaultFindingsDangerReporter(context)
 }
