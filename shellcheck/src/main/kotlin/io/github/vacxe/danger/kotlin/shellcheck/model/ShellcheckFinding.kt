@@ -1,6 +1,6 @@
-package io.github.vacxe.danger.shellcheck.model
+package io.github.vacxe.danger.kotlin.shellcheck.model
 
-data class Finding(
+data class ShellcheckFinding(
     val file: String,
     val line: Int,
     val endLine: Int,

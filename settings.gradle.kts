@@ -1,4 +1,4 @@
-rootProject.name = "danger-kotlin-shellcheck"
+rootProject.name = "danger-kotlin-reporters"
 
 dependencyResolutionManagement {
     @Suppress("UnstableApiUsage")
@@ -9,4 +9,5 @@ dependencyResolutionManagement {
 
 includeBuild("build-logic")
 
-include(":plugin")
+include(":core")
+include(":shellcheck")

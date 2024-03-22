@@ -1,5 +1,4 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import java.net.URI
 
 plugins {
     id("java")
@@ -32,14 +31,15 @@ fun readVersion(): String {
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            artifactId = "plugin"
+            val artifactIdProperty: String? by project
+            artifactId = artifactIdProperty
 
             from(components["java"])
 
             pom {
                 name.set("danger-kotlin-shellcheck")
                 description.set("Danger-kotlin plugin to parse and report Shellcheck violations")
-                url.set("https://github.com/vacxe/danger-kotlin-shellcheck")
+                url.set("https://github.com/vacxe/danger-kotlin-reporters")
                 licenses {
                     license {
                         name.set("The Apache Software License, Version 2.0")
@@ -54,9 +54,9 @@ publishing {
                     }
                 }
                 scm {
-                    connection.set("scm:git:github.com/vacxe/danger-kotlin-shellcheck.git")
-                    developerConnection.set("scm:git:ssh://github.com/vacxe/danger-kotlin-shellcheck.git")
-                    url.set("https://github.com/vacxe/danger-kotlin-shellcheck")
+                    connection.set("scm:git:github.com/vacxe/danger-kotlin-reporters.git")
+                    developerConnection.set("scm:git:ssh://github.com/vacxe/danger-kotlin-reporters.git")
+                    url.set("https://github.com/vacxe/danger-kotlin-reporters")
                 }
             }
         }

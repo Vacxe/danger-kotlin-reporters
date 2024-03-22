@@ -8,6 +8,10 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package: [ shellcheck ]
 
     steps:
       - name: Set up JDK
@@ -18,10 +22,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Publish
+      - name: Publish Snapshot
         env:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
-        run: ./gradlew :plugin:publish
+          PACKAGE: ${{ matrix.package }}
+        run: ./gradlew :$PACKAGE:publish -PartifactIdProperty=$PACKAGE

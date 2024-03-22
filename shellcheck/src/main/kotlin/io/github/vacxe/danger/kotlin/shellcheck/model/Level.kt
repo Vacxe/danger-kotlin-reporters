@@ -1,4 +1,4 @@
-package io.github.vacxe.danger.shellcheck.model
+package io.github.vacxe.danger.kotlin.shellcheck.model
 
 import com.google.gson.annotations.SerializedName
 
