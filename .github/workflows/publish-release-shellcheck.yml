@@ -6,22 +6,8 @@ on:
       - 'shellcheck_*'
 
 jobs:
-  publish:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Set up JDK
-        uses: actions/setup-java@v1
-        with:
-          java-version: 8
-
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Publish
-        env:
-          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
-        run: ./gradlew :shellcheck:publish -PreleaseMode=RELEASE -PartifactIdProperty=shellcheck
+  publish-release:
+    uses: ./.github/workflows/publish-release-workflow.yml
+    with:
+      project: shellcheck
+    secrets: inherit

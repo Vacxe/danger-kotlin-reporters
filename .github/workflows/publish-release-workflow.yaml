@@ -1,0 +1,30 @@
+name: Reusable Publish Release
+
+on:
+  workflow_call:
+    inputs:
+      project:
+        required: true
+        type: string
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 8
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Publish ${{ inputs.project }}
+        env:
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+          PROJECT: ${{ inputs.project }}
+        run: ./gradlew :$PROJECT:publish -PreleaseMode=RELEASE -PartifactIdProperty=$PROJECT
