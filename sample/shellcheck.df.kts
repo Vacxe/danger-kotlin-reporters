@@ -1,4 +1,4 @@
-@file:DependsOn("io.github.vacxe.danger.shellcheck:plugin:1.0.5")
+@file:DependsOn("io.github.vacxe.danger.kotlin:shellcheck:1.0.0-SNAPSHOT")
 
 import systems.danger.kotlin.*
 import systems.danger.kotlin.models.github.*
