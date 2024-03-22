@@ -1,8 +1,9 @@
-name: Publish Release
+name: Shellcheck Publish Release
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'shellcheck_*'
 
 jobs:
   publish:
