@@ -1,0 +1,13 @@
+name: Yamllint Publish Release
+
+on:
+  push:
+    tags:
+      - 'core_*'
+
+jobs:
+  publish-release:
+    uses: ./.github/workflows/publish-release-workflow.yaml
+    with:
+      project: core
+    secrets: inherit

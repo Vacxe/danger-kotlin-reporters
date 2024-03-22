@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm")
+    id("convention.publishing")
     id("convention.testing")
 }
 
