@@ -95,6 +95,3 @@ fun shellcheckReport() {
     }
 }
 ```
-
-## Thanks
-[@pavelkorolevxyz](https://github.com/pavelkorolevxyz) [danger-detekt](https://github.com/pavelkorolevxyz/danger-detekt-kotlin) for inspiration

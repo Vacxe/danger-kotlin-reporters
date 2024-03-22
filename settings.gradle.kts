@@ -11,3 +11,4 @@ includeBuild("build-logic")
 
 include(":core")
 include(":shellcheck")
+include(":yamllint")
