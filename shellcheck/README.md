@@ -2,7 +2,7 @@
 
 Plugin for [danger/kotlin](https://github.com/danger/kotlin) which helps to parse and report [Shellcheck](https://www.shellcheck.net/) violations from its json report file.
 
-[![Current version](https://img.shields.io/badge/io.github.vacxe.danger.kotlin:shellcheck-1.0.0-orange)](https://central.sonatype.com/artifact/io.github.vacxe.danger.kotlin/shellcheck)
+[![Current version](https://img.shields.io/badge/io.github.vacxe.danger.kotlin:shellcheck-1.0.1-orange)](https://central.sonatype.com/artifact/io.github.vacxe.danger.kotlin/shellcheck)
 
 ## Usage
 

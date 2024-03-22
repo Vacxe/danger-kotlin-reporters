@@ -2,7 +2,7 @@
 
 Plugin for [danger/kotlin](https://github.com/danger/kotlin) which helps to parse and report [Yamllint](https://yamllint.readthedocs.io/en/stable/#/) violations from its output report file.
 
-[![Current version](https://img.shields.io/badge/io.github.vacxe.danger.kotlin:yamllint-1.0.0-orange)](https://central.sonatype.com/artifact/io.github.vacxe.danger.kotlin/yamllint)
+[![Current version](https://img.shields.io/badge/io.github.vacxe.danger.kotlin:yamllint-1.0.1-orange)](https://central.sonatype.com/artifact/io.github.vacxe.danger.kotlin/yamllint)
 
 ## Usage
 
