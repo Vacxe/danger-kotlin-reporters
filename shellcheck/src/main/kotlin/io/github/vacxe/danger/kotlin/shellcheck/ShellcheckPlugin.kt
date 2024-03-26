@@ -5,7 +5,7 @@ package io.github.vacxe.danger.kotlin.shellcheck
 import io.github.vacxe.danger.kotlin.core.DangerReporter
 import io.github.vacxe.danger.kotlin.core.reporter.DefaultFindingsDangerReporter
 import io.github.vacxe.danger.kotlin.core.reporter.FindingsDangerReporter
-import io.github.vacxe.danger.kotlin.shellcheck.parser.ShellcheckReportParser
+import io.github.vacxe.danger.kotlin.yamllint.parser.ShellcheckReportParser
 import systems.danger.kotlin.sdk.DangerPlugin
 import java.io.File
 

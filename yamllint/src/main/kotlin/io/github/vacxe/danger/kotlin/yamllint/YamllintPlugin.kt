@@ -1,16 +1,16 @@
 @file:Suppress("MemberVisibilityCanBePrivate")
 
-package io.github.vacxe.danger.kotlin.shellcheck
+package io.github.vacxe.danger.kotlin.yamllint
 
 import io.github.vacxe.danger.kotlin.core.DangerReporter
 import io.github.vacxe.danger.kotlin.core.reporter.DefaultFindingsDangerReporter
 import io.github.vacxe.danger.kotlin.core.reporter.FindingsDangerReporter
-import io.github.vacxe.danger.kotlin.shellcheck.parser.YamllintReportParser
+import io.github.vacxe.danger.kotlin.yamllint.parser.YamllintReportParser
 import systems.danger.kotlin.sdk.DangerPlugin
 import java.io.File
 
 /**
- * Shellcheck artifacts parse and report plugin to use in Dangerfiles
+ * Yamllint artifacts parse and report plugin to use in Dangerfiles
  *
  * Usage:
  * ```

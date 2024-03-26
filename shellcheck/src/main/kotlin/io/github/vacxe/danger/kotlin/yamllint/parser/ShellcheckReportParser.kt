@@ -1,4 +1,4 @@
-package io.github.vacxe.danger.kotlin.shellcheck.parser
+package io.github.vacxe.danger.kotlin.yamllint.parser
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

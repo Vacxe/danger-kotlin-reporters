@@ -1,4 +1,4 @@
-package io.github.vacxe.danger.kotlin.shellcheck.parser
+package io.github.vacxe.danger.kotlin.yamllint.parser
 
 import io.github.vacxe.danger.kotlin.core.model.Finding
 import io.github.vacxe.danger.kotlin.core.model.Level
