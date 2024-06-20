@@ -23,11 +23,11 @@ import java.io.File
  * DetektPlugin.parseAndReport(files)
  * ```
  */
-object DetektPlugin : DangerPlugin(), DangerReporter{
+class DetektPlugin(findingFilePathMapper: FindingFilePathMapper) : DangerPlugin(), DangerReporter{
 
     override val id: String = "detekt-plugin"
 
-    private val parser = DetektReportParser()
+    private val parser = DetektReportParser(findingFilePathMapper)
 
     override fun parse(
         vararg files: File,

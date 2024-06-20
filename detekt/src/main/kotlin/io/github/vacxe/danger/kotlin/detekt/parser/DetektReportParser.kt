@@ -2,16 +2,13 @@ package io.github.vacxe.danger.kotlin.detekt.parser
 
 import io.github.vacxe.danger.kotlin.core.model.Finding
 import io.github.vacxe.danger.kotlin.core.model.Level
+import io.github.vacxe.danger.kotlin.detekt.FindingFilePathMapper
 import org.xml.sax.InputSource
 
 import java.io.File
 import java.io.StringReader
-import java.util.*
-import javax.lang.model.element.Element
 import javax.xml.parsers.DocumentBuilderFactory
-internal class DetektReportParser {
-
-    private val pathPrefix = File("").absolutePath
+internal class DetektReportParser(private val findingFilePathMapper: FindingFilePathMapper) {
 
     fun parse(files: List<File>): List<Finding> {
         return files
@@ -38,9 +35,7 @@ internal class DetektReportParser {
                     val message = error.attributes.getNamedItem("message").textContent
                     findings.add(
                         Finding(
-                            file = fileName
-                                .let(::File)
-                                .let(::createFilePath),
+                            file = fileName.let(findingFilePathMapper::map),
                             line = line.toInt(),
                             level = when (severity) {
                                 "error" -> Level.ERROR
@@ -57,11 +52,6 @@ internal class DetektReportParser {
         }
 
         return findings
-    }
-
-    private fun createFilePath(file: File): String {
-        if (file.absolutePath == pathPrefix) return file.absolutePath
-        return file.absolutePath.removePrefix(pathPrefix + File.separator)
     }
 
     private fun createMessage(message: String): String {

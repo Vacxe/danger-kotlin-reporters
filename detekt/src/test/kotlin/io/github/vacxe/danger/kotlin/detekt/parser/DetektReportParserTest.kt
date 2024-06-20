@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class DetektReportParserTest {
-    private val detektReportParser = DetektReportParser()
+    private val detektReportParser = DetektReportParser(findingFilePathMapper)
 
     @Test
     fun testReportParse() {
