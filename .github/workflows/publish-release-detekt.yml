@@ -1,0 +1,13 @@
+name: Yamllint Publish Release
+
+on:
+  push:
+    tags:
+      - 'detekt_*'
+
+jobs:
+  publish-release:
+    uses: ./.github/workflows/publish-release-workflow.yaml
+    with:
+      project: detekt
+    secrets: inherit
