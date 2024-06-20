@@ -81,7 +81,7 @@ danger(args) {
 }
 
 fun detektReport() {
-    val detektReportFile = File("detekt/report.xml")
+    val detektReportFile = File("build/reports/detekt/detekt.xml")
     if (!detektReportFile.exists()) {
         warn(
             "Detekt report not exist",
