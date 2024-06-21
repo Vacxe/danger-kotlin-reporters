@@ -10,8 +10,8 @@ Plugin for [danger/kotlin](https://github.com/danger/kotlin) which helps to pars
 Latest version could be found in [Maven Central](https://search.maven.org/artifact/io.github.vacxe.danger.koltin/detekt)
 ```kotlin
 @file:DependsOn("io.github.vacxe.danger.kotlin:detekt:<LATEST VERSION>")
-
-register.plugin(DetektPlugin)
+val detektPlugin = DetektPlugin()
+register.plugin(detektPlugin)
 ```
 
 If you have custom Maven proxy like Artifactory don't forget to add it
@@ -30,7 +30,7 @@ This does what it says. If you have one Detekt report and don't want any customi
 By default, Plugin inline comments for you pull request and apply severity level based on Detekt report (`reportFile` - XML output from Detekt)
 
 ```kotlin
-DetektPlugin.parseAndReport(reportFile, inline = false)
+detektPlugin.parseAndReport(reportFile, inline = false)
 ```
 
 #### Multiple files parse and report
@@ -38,14 +38,14 @@ DetektPlugin.parseAndReport(reportFile, inline = false)
 Actually parameters of all `parse` functions are `varargs`, so you could provide it as many report files as you want.
 
 ```kotlin
-DetektPlugin.parseAndReport(reportFile1, reportFile2, reportFile3)
+detektPlugin.parseAndReport(reportFile1, reportFile2, reportFile3)
 ```
 
 or
 
 ```kotlin
 val files: Array<File> = findReportFilesByYourself()
-DetektPlugin.parseAndReport(*files)
+detektPlugin.parseAndReport(*files)
 ```
 
 ### Parse
@@ -53,7 +53,7 @@ DetektPlugin.parseAndReport(*files)
 You could also parse files without immediate reporting.
 
 ```kotlin
-val findings: List<Findings> = DetektPlugin.parse(files)
+val findings: List<Findings> = detektPlugin.parse(files)
 ```
 
 ### Report
@@ -61,7 +61,7 @@ val findings: List<Findings> = DetektPlugin.parse(files)
 You could also report it like this
 
 ```kotlin
-DetektPlugin.report(findings)
+detektPlugin.report(findings)
 ```
 
 ## Example
@@ -74,7 +74,8 @@ import systems.danger.kotlin.models.github.*
 import io.github.vacxe.danger.kotlin.detekt.DetektPlugin
 import java.io.File
 
-register.plugin(DetektPlugin)
+val detektPlugin = DetektPlugin()
+register.plugin(detektPlugin)
 
 danger(args) {
     detektReport()
@@ -87,7 +88,7 @@ fun detektReport() {
             "Detekt report not exist",
         )
     } else {
-        DetektPlugin.parseAndReport(detektReportFile)
+        detektPlugin.parseAndReport(detektReportFile)
     }
 }
 ```

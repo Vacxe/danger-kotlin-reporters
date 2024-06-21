@@ -14,16 +14,19 @@ import java.io.File
  *
  * Usage:
  * ```
- * register.plugin(DetektPlugin)
- * val report = DetektPlugin.parse(files)
- * DetektPlugin.report(report)
+ * val detektPlugin = DetektPlugin()
+ * register.plugin(detektPlugin)
+ * val report = detektPlugin.parse(files)
+ * detektPlugin.report(report)
  * ```
  * or
  * ```
- * DetektPlugin.parseAndReport(files)
+ * detektPlugin.parseAndReport(files)
  * ```
+ *
+ * @param findingFilePathMapper custom mapper for reported file path
  */
-class DetektPlugin(findingFilePathMapper: FindingFilePathMapper) : DangerPlugin(), DangerReporter{
+class DetektPlugin(findingFilePathMapper: (String) -> String = { input -> input }) : DangerPlugin(), DangerReporter {
 
     override val id: String = "detekt-plugin"
 

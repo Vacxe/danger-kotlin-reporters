@@ -6,7 +6,8 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class DetektReportParserTest {
-    private val detektReportParser = DetektReportParser(findingFilePathMapper)
+
+    private val detektReportParser = DetektReportParser()
 
     @Test
     fun testReportParse() {
@@ -28,10 +29,10 @@ class DetektReportParserTest {
 
         assertEquals(
             listOf(
-                Finding("MyClass.kt", 1, Level.WARNING, "\n" + "**Detekt**: Warning"),
-                Finding("MyClass.kt", 3, Level.ERROR, "\n" + "**Detekt**: Error"),
-                Finding("MyClass2.kt", 1, Level.WARNING, "\n" + "**Detekt**: Warning"),
-                Finding("MyClass2.kt", 3, Level.ERROR, "\n" + "**Detekt**: Error"),
+                Finding("MyClass.kt", 1, Level.WARNING, "\n**Detekt**: Warning\n**Source**: detekt.Warning"),
+                Finding("MyClass.kt", 3, Level.ERROR, "\n**Detekt**: Error\n**Source**: detekt.Error"),
+                Finding("MyClass2.kt", 1, Level.WARNING, "\n**Detekt**: Warning\n**Source**: detekt.Warning"),
+                Finding("MyClass2.kt", 3, Level.ERROR, "\n**Detekt**: Error\n**Source**: detekt.Error"),
             ),
             result,
         )
