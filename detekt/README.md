@@ -2,7 +2,7 @@
 
 Plugin for [danger/kotlin](https://github.com/danger/kotlin) which helps to parse and report [Detekt](https://github.com/detekt/detekt) violations from its output report file.
 
-[![Current version](https://img.shields.io/badge/io.github.vacxe.danger.kotlin:detekt-1.0.0-orange)](https://central.sonatype.com/artifact/io.github.vacxe.danger.kotlin/detekt)
+[![Current version](https://img.shields.io/badge/io.github.vacxe.danger.kotlin:detekt-1.1.0-orange)](https://central.sonatype.com/artifact/io.github.vacxe.danger.kotlin/detekt)
 
 ## Usage
 
@@ -10,7 +10,7 @@ Plugin for [danger/kotlin](https://github.com/danger/kotlin) which helps to pars
 Latest version could be found in [Maven Central](https://search.maven.org/artifact/io.github.vacxe.danger.koltin/detekt)
 ```kotlin
 @file:DependsOn("io.github.vacxe.danger.kotlin:detekt:<LATEST VERSION>")
-val detektPlugin = DetektPlugin()
+val plugin = DetektPlugin()
 register.plugin(detektPlugin)
 ```
 
@@ -30,7 +30,7 @@ This does what it says. If you have one Detekt report and don't want any customi
 By default, Plugin inline comments for you pull request and apply severity level based on Detekt report (`reportFile` - XML output from Detekt)
 
 ```kotlin
-detektPlugin.parseAndReport(reportFile, inline = false)
+plugin.parseAndReport(reportFile, inline = false)
 ```
 
 #### Multiple files parse and report
@@ -38,14 +38,14 @@ detektPlugin.parseAndReport(reportFile, inline = false)
 Actually parameters of all `parse` functions are `varargs`, so you could provide it as many report files as you want.
 
 ```kotlin
-detektPlugin.parseAndReport(reportFile1, reportFile2, reportFile3)
+plugin.parseAndReport(reportFile1, reportFile2, reportFile3)
 ```
 
 or
 
 ```kotlin
 val files: Array<File> = findReportFilesByYourself()
-detektPlugin.parseAndReport(*files)
+plugin.parseAndReport(*files)
 ```
 
 ### Parse
@@ -53,7 +53,7 @@ detektPlugin.parseAndReport(*files)
 You could also parse files without immediate reporting.
 
 ```kotlin
-val findings: List<Findings> = detektPlugin.parse(files)
+val findings: List<Findings> = plugin.parse(files)
 ```
 
 ### Report
@@ -61,7 +61,7 @@ val findings: List<Findings> = detektPlugin.parse(files)
 You could also report it like this
 
 ```kotlin
-detektPlugin.report(findings)
+plugin.report(findings)
 ```
 
 ## Example
@@ -74,8 +74,8 @@ import systems.danger.kotlin.models.github.*
 import io.github.vacxe.danger.kotlin.detekt.DetektPlugin
 import java.io.File
 
-val detektPlugin = DetektPlugin()
-register.plugin(detektPlugin)
+val plugin = DetektPlugin()
+register.plugin(plugin)
 
 danger(args) {
     detektReport()
@@ -88,7 +88,7 @@ fun detektReport() {
             "Detekt report not exist",
         )
     } else {
-        detektPlugin.parseAndReport(detektReportFile)
+        plugin.parseAndReport(detektReportFile)
     }
 }
 ```

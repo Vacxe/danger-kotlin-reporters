@@ -5,7 +5,7 @@ package io.github.vacxe.danger.kotlin.shellcheck
 import io.github.vacxe.danger.kotlin.core.DangerReporter
 import io.github.vacxe.danger.kotlin.core.reporter.DefaultFindingsDangerReporter
 import io.github.vacxe.danger.kotlin.core.reporter.FindingsDangerReporter
-import io.github.vacxe.danger.kotlin.yamllint.parser.ShellcheckReportParser
+import io.github.vacxe.danger.kotlin.shellcheck.parser.ShellcheckReportParser
 import systems.danger.kotlin.sdk.DangerPlugin
 import java.io.File
 
@@ -14,20 +14,24 @@ import java.io.File
  *
  * Usage:
  * ```
- * register.plugin(ShellcheckPlugin)
- * val report = ShellcheckPlugin.parse(files)
- * ShellcheckPlugin.report(report)
+ * val shellCheckPlugin = ShellcheckPlugin()
+ * register.plugin(shellCheckPlugin)
+ * val report = shellCheckPlugin.parse(files)
+ * shellCheckPlugin.report(report)
  * ```
  * or
  * ```
- * ShellcheckPlugin.parseAndReport(files)
+ * shellCheckPlugin.parseAndReport(files)
+ * ```
+ *
+ * @param findingFilePathMapper custom mapper for reported file path
  * ```
  */
-object ShellcheckPlugin : DangerPlugin(), DangerReporter {
+class ShellcheckPlugin(findingFilePathMapper: (String) -> String = { input -> input }) : DangerPlugin(), DangerReporter {
 
     override val id: String = "shellcheck-plugin"
 
-    private val parser = ShellcheckReportParser()
+    private val parser = ShellcheckReportParser(findingFilePathMapper)
 
     override fun parse(
         vararg files: File,

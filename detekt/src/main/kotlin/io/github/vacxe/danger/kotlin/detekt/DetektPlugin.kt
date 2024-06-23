@@ -10,7 +10,7 @@ import systems.danger.kotlin.sdk.DangerPlugin
 import java.io.File
 
 /**
- * Shellcheck artifacts parse and report plugin to use in Dangerfiles
+ * Detekt artifacts parse and report plugin to use in Dangerfiles
  *
  * Usage:
  * ```

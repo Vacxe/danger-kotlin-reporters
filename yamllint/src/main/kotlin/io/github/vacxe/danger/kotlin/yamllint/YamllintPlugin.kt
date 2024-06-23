@@ -14,20 +14,23 @@ import java.io.File
  *
  * Usage:
  * ```
- * register.plugin(YamllintPlugin)
- * val report = YamllintPlugin.parse(files)
- * YamllintPlugin.report(report)
+ * val yamllintPlugin = YamllintPlugin()
+ * register.plugin(yamllintPlugin)
+ * val report = yamllintPlugin.parse(files)
+ * yamllintPlugin.report(report)
  * ```
  * or
  * ```
- * YamllintPlugin.parseAndReport(files)
+ * yamllintPlugin.parseAndReport(files)
  * ```
+ *
+ * @param findingFilePathMapper custom mapper for reported file path
  */
-object YamllintPlugin : DangerPlugin(), DangerReporter {
+class YamllintPlugin(findingFilePathMapper: (String) -> String = { input -> input }) : DangerPlugin(), DangerReporter {
 
     override val id: String = "yamllint-plugin"
 
-    private val parser = YamllintReportParser()
+    private val parser = YamllintReportParser(findingFilePathMapper)
 
     override fun parse(
         vararg files: File,

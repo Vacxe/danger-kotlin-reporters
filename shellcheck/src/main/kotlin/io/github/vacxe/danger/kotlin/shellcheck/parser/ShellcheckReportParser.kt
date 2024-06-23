@@ -1,16 +1,17 @@
-package io.github.vacxe.danger.kotlin.yamllint.parser
+package io.github.vacxe.danger.kotlin.shellcheck.parser
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.github.vacxe.danger.kotlin.core.model.Finding
 import io.github.vacxe.danger.kotlin.shellcheck.model.Level
 import io.github.vacxe.danger.kotlin.shellcheck.model.ShellcheckFinding
+
 import java.io.File
 import java.lang.reflect.Type
 
 typealias LevelCore = io.github.vacxe.danger.kotlin.core.model.Level
 
-internal class ShellcheckReportParser {
+internal class ShellcheckReportParser(private val findingFilePathMapper: (String) -> String = { input -> input }) {
 
     fun parse(files: List<File>): List<Finding> {
         return files
@@ -18,7 +19,8 @@ internal class ShellcheckReportParser {
             .flatten()
             .map {
                 Finding(
-                    it.file,
+                    it.file
+                        .let(findingFilePathMapper),
                     it.line,
                     when (it.level) {
                         Level.ERROR -> LevelCore.ERROR

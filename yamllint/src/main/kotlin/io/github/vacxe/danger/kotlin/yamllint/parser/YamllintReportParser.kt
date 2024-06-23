@@ -7,7 +7,7 @@ import java.util.*
 
 typealias LevelCore = io.github.vacxe.danger.kotlin.core.model.Level
 
-internal class YamllintReportParser {
+internal class YamllintReportParser(private val findingFilePathMapper: (String) -> String = { input -> input }) {
 
     private val pathPrefix = File("").absolutePath
 
@@ -22,8 +22,7 @@ internal class YamllintReportParser {
         val location = input.substringBefore(" ")
         val content = input.substringAfter(" ")
         val file = location.substringBefore(":")
-            .let(::File)
-            .let(::createFilePath)
+            .let(findingFilePathMapper)
         val line = location
             .substringAfter(":")
             .substringBefore(":")
@@ -46,11 +45,6 @@ internal class YamllintReportParser {
 
 
         return Finding(file, line, level, message)
-    }
-
-    private fun createFilePath(file: File): String {
-        if (file.absolutePath == pathPrefix) return file.absolutePath
-        return file.absolutePath.removePrefix(pathPrefix + File.separator)
     }
 
     private fun createMessage(message: String): String {

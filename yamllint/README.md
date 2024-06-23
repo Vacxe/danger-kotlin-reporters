@@ -2,7 +2,7 @@
 
 Plugin for [danger/kotlin](https://github.com/danger/kotlin) which helps to parse and report [Yamllint](https://yamllint.readthedocs.io/en/stable/#/) violations from its output report file.
 
-[![Current version](https://img.shields.io/badge/io.github.vacxe.danger.kotlin:yamllint-1.0.2-orange)](https://central.sonatype.com/artifact/io.github.vacxe.danger.kotlin/yamllint)
+[![Current version](https://img.shields.io/badge/io.github.vacxe.danger.kotlin:yamllint-1.1.0-orange)](https://central.sonatype.com/artifact/io.github.vacxe.danger.kotlin/yamllint)
 
 ## Usage
 
@@ -11,7 +11,8 @@ Latest version could be found in [Maven Central](https://search.maven.org/artifa
 ```kotlin
 @file:DependsOn("io.github.vacxe.danger.kotlin:yamllint:<LATEST VERSION>")
 
-register.plugin(YamllintPlugin)
+val plugin = ShellcheckPlugin()
+register.plugin(plugin)
 ```
 
 If you have custom Maven proxy like Artifactory don't forget to add it
@@ -34,7 +35,7 @@ This does what it says. If you have one Yamllint report and don't want any custo
 By default, Plugin inline comments for you pull request and apply severity level based on Yamllint report
 
 ```kotlin
-YamllintPlugin.parseAndReport(reportFile, inline = false)
+plugin.parseAndReport(reportFile, inline = false)
 ```
 
 #### Multiple files parse and report
@@ -42,14 +43,14 @@ YamllintPlugin.parseAndReport(reportFile, inline = false)
 Actually parameters of all `parse` functions are `varargs`, so you could provide it as many report files as you want.
 
 ```kotlin
-YamllintPlugin.parseAndReport(reportFile1, reportFile2, reportFile3)
+plugin.parseAndReport(reportFile1, reportFile2, reportFile3)
 ```
 
 or
 
 ```kotlin
 val files: Array<File> = findReportFilesByYourself()
-YamllintPlugin.parseAndReport(*files)
+plugin.parseAndReport(*files)
 ```
 
 ### Parse
@@ -57,7 +58,7 @@ YamllintPlugin.parseAndReport(*files)
 You could also parse files without immediate reporting.
 
 ```kotlin
-val findings: List<Findings> = YamllintPlugin.parse(files)
+val findings: List<Findings> = plugin.parse(files)
 ```
 
 ### Report
@@ -65,7 +66,7 @@ val findings: List<Findings> = YamllintPlugin.parse(files)
 You could also report it like this
 
 ```kotlin
-YamllintPlugin.report(findings)
+plugin.report(findings)
 ```
 
 ## Example
@@ -78,7 +79,8 @@ import systems.danger.kotlin.models.github.*
 import io.github.vacxe.danger.kotlin.yamllint.YamllintPlugin
 import java.io.File
 
-register.plugin(YamllintPlugin)
+val plugin = ShellcheckPlugin()
+register.plugin(plugin)
 
 danger(args) {
     yamllintReport()
@@ -91,7 +93,7 @@ fun yamllintReport() {
             "Yamllint report not exist",
         )
     } else {
-        YamllintPlugin.parseAndReport(yamllintReportFile)
+        plugin.parseAndReport(yamllintReportFile)
     }
 }
 ```
