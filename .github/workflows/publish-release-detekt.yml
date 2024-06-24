@@ -1,4 +1,4 @@
-name: Yamllint Publish Release
+name: Detekt Publish Release
 
 on:
   push:
